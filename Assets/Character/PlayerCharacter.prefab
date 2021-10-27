@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 4751273632825783354}
   - component: {fileID: 4751273632825783357}
   - component: {fileID: 1491206243}
+  - component: {fileID: 531938551}
   m_Layer: 0
   m_Name: PlayerCharacter
   m_TagString: Untagged
@@ -234,3 +235,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containerCanvas: {fileID: 0}
   itemTable: {fileID: 11400000, guid: 68fcaca77375b5e4292e6f67da4b0f39, type: 2}
+  itemContainer: {fileID: 531938551}
+--- !u!114 &531938551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4751273632825783350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a4377cb4b280d9479d8d7e87fac613e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryItems: []
+  attachedItemGrid: {fileID: 0}

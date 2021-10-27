@@ -2,25 +2,78 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
-public class ItemInstance : MonoBehaviour
+public class ItemInstance : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
 {
-    Item reference;
+    public Item reference;
 
-    public ItemInstance(Item itemref)
-    {
-        reference = itemref;
-    }
+    public Vector2 size;
+
+    public Image icon;
+    public TMP_Text countText;
+    public int count;
+
+    public ItemSlot parentSlot;
+
+    public Canvas canvas;
+    private RectTransform rectTransform;
+    CanvasGroup canvasGroup;
+
+    public Container containerReference;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        transform.GetChild(0).GetComponent<Image>().sprite = reference.icon;
- 
+        rectTransform = GetComponent<RectTransform>();
+        canvas = transform.parent.GetComponent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Setup(Item item, int thiscount)
     {
-        
+        reference = item;
+        count = thiscount;
+        icon.sprite = reference.icon;
+        if (item.isConsumable)
+            transform.GetChild(1).GetComponent<TMP_Text>().text = count.ToString();
+        else
+            transform.GetChild(1).gameObject.SetActive(false);
+        icon.rectTransform.sizeDelta = new Vector2(item.gridSize.x * 96, item.gridSize.y * 96);
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+       // Debug.Log("drag begin");
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        //Debug.Log("draag");
+        icon.rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        //Debug.Log("drag end");
+        canvasGroup.blocksRaycasts = true;
+        PlaceItemInSlot();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log("dropped");
+        if (eventData.pointerDrag != null)
+            eventData.pointerDrag.GetComponent<ItemInstance>().PlaceItemInSlot();
+    }
+
+    public void PlaceItemInSlot()
+    {
+        rectTransform.position = parentSlot.transform.GetComponent<RectTransform>().position;
+
+        //Debug.Log(parentSlot.transform.GetComponent<RectTransform>().anchoredPosition);
+
     }
 }

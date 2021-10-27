@@ -4,90 +4,163 @@ using UnityEngine;
 
 public class Container : MonoBehaviour
 {
-    public List<Item> inventoryItems;
+    public List<GameObject> itemList;
     public ItemSlotGridDimensioner attachedItemGrid;
-
-    public ItemInstance item1x1;
-    public ItemInstance item1x3;
-    public ItemInstance item1x4;
-    public ItemInstance item2x2;
 
     // Start is called before the first frame update
     void Start()
     {
-        inventoryItems = new List<Item>();
+        itemList = new List<GameObject>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlaceItem(ItemInstance item)
     {
-        
-    }
+        itemList.Add(item.gameObject);
+        float tempfloat = item.reference.gridSize.x * item.reference.gridSize.y;
 
-    public void AddItem(Item item, int count)
-    {
-        Item temp = Instantiate(item);
-        inventoryItems.Add(item);
-        float tempfloat = item.gridSize.x * item.gridSize.y;
         ItemSlot startSlot = attachedItemGrid.GetItemSlot().GetComponent<ItemSlot>();
 
-        while(!CheckIfFits(temp, startSlot))
+        while (!CheckIfFits(item.reference, startSlot))
         {
-            Debug.Log(startSlot.id);
             int tempInt = startSlot.id + 1;
             if (!attachedItemGrid.GetItemSlot(tempInt))
             {
+                
                 Debug.Log("not enough room");
                 return;
             }
 
             startSlot = attachedItemGrid.GetItemSlot(tempInt);
-            
+
         }
-
-        startSlot.itemInSlot = temp;
-        startSlot.ItemCount = count;
+        if(!item.containerReference)
+        {
+            item.containerReference = this;
+        }
+        startSlot.itemInSlot = item;
+        item.parentSlot = startSlot;
+        startSlot.ItemCount = item.count;
         startSlot.RefreshInfo();
+        //80, -120
+        item.PlaceItemInSlot();
 
-        if(tempfloat > 1)
+        if (tempfloat > 1)
         {
             int x = 1;
             int y = 1;
 
             ItemSlot currentSlotX = startSlot;
             ItemSlot currentSlotY = startSlot;
-            while (y < (int)item.gridSize.y)
+            while (y < (int)item.reference.gridSize.y)
             {
                 //Debug.Log(y);
-                currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = temp;
-                currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = count;
+                currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = item;
+                currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = item.count;
                 currentSlotY.RefreshInfo();
                 currentSlotY = currentSlotY.GetNeighbour(GridDirections.DOWN);
                 y++;
             }
-            while  (x < (int)item.gridSize.x)
+            while (x < (int)item.reference.gridSize.x)
             {
                 y = 1;
                 //Debug.Log(x);
-                currentSlotX.GetNeighbour(GridDirections.RIGHT).itemInSlot = temp;
-                currentSlotX.GetNeighbour(GridDirections.RIGHT).ItemCount = count;
+                currentSlotX.GetNeighbour(GridDirections.RIGHT).itemInSlot = item;
+                currentSlotX.GetNeighbour(GridDirections.RIGHT).ItemCount = item.count;
                 currentSlotX.RefreshInfo();
                 currentSlotX = currentSlotX.GetNeighbour(GridDirections.RIGHT);
                 currentSlotY = currentSlotX;
-                while (y < (int)item.gridSize.y)
+                while (y < (int)item.reference.gridSize.y)
                 {
                     //Debug.Log(y);
-                    currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = temp;
-                    currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = count;
+                    currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = item;
+                    currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = item.count;
                     currentSlotY.RefreshInfo();
                     currentSlotY = currentSlotY.GetNeighbour(GridDirections.DOWN);
                     y++;
                 }
                 x++;
-                
+
             }
             //currentSlot = startSlot;
-            
+
+        }
+    }
+
+    public void PlaceItem(ItemInstance item, ItemSlot passedSlot, ItemSlot initalSlot)
+    {
+        ItemInstance temp = item;
+        if(!itemList.Contains(item.gameObject))
+            itemList.Add(item.gameObject);
+        float tempfloat = item.reference.gridSize.x * item.reference.gridSize.y;
+
+        ItemSlot startSlot = passedSlot;
+
+        while (!CheckIfFits(item.reference, startSlot))
+        {
+            int tempInt = startSlot.id + 1;
+            if (!attachedItemGrid.GetItemSlot(tempInt))
+            {
+
+                startSlot = initalSlot;
+                item.containerReference = attachedItemGrid.containerReference;
+                temp.gameObject.transform.SetParent(startSlot.transform.parent.transform.parent);
+                Debug.Log("not enough room");
+                break;
+            }
+
+            startSlot = attachedItemGrid.GetItemSlot(tempInt);
+
+        }
+        if (!item.containerReference)
+        {
+            item.containerReference = this;
+        }
+        startSlot.itemInSlot = temp;
+        item.parentSlot = startSlot;
+        startSlot.ItemCount = item.count;
+        startSlot.RefreshInfo();
+        //80, -120
+        item.PlaceItemInSlot();
+
+        if (tempfloat > 1)
+        {
+            int x = 1;
+            int y = 1;
+
+            ItemSlot currentSlotX = startSlot;
+            ItemSlot currentSlotY = startSlot;
+            while (y < (int)item.reference.gridSize.y)
+            {
+                //Debug.Log(y);
+                currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = item;
+                currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = item.count;
+                currentSlotY.RefreshInfo();
+                currentSlotY = currentSlotY.GetNeighbour(GridDirections.DOWN);
+                y++;
+            }
+            while (x < (int)item.reference.gridSize.x)
+            {
+                y = 1;
+                //Debug.Log(x);
+                currentSlotX.GetNeighbour(GridDirections.RIGHT).itemInSlot = item;
+                currentSlotX.GetNeighbour(GridDirections.RIGHT).ItemCount = item.count;
+                currentSlotX.RefreshInfo();
+                currentSlotX = currentSlotX.GetNeighbour(GridDirections.RIGHT);
+                currentSlotY = currentSlotX;
+                while (y < (int)item.reference.gridSize.y)
+                {
+                    //Debug.Log(y);
+                    currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot = item;
+                    currentSlotY.GetNeighbour(GridDirections.DOWN).ItemCount = item.count;
+                    currentSlotY.RefreshInfo();
+                    currentSlotY = currentSlotY.GetNeighbour(GridDirections.DOWN);
+                    y++;
+                }
+                x++;
+
+            }
+            //currentSlot = startSlot;
+
         }
     }
 
@@ -101,7 +174,10 @@ public class Container : MonoBehaviour
 
             ItemSlot currentSlotX = startSlot;
             ItemSlot currentSlotY = startSlot;
+            if(startSlot.itemInSlot.reference == item && item.isConsumable)
+            {
 
+            }    
             if (!startSlot || startSlot.itemInSlot)
                 return false;
 
@@ -150,5 +226,12 @@ public class Container : MonoBehaviour
                 return false;
         }
         
+    }
+
+    public void RemoveItem(ItemInstance item)
+    {
+        attachedItemGrid.ResetIteminSlot(item);
+
+        itemList.Remove(item.gameObject);
     }
 }

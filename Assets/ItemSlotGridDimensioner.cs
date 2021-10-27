@@ -13,6 +13,8 @@ public class ItemSlotGridDimensioner : MonoBehaviour
     Vector2Int GridDimensions = new Vector2Int(6, 6);
 
     public ItemSlot[] itemSlotList;
+    public Container containerReference;
+
 
     void Awake()
     {
@@ -23,9 +25,12 @@ public class ItemSlotGridDimensioner : MonoBehaviour
     {
         foreach(ItemSlot itemSlot in itemSlotList)
         {
-            if(!itemSlot.itemInSlot)
+            if (itemSlot)
             {
-                return itemSlot;
+                if (!itemSlot.itemInSlot)
+                {
+                    return itemSlot;
+                }
             }
         }
         return null;
@@ -48,6 +53,7 @@ public class ItemSlotGridDimensioner : MonoBehaviour
     {
         ItemSlot newObject =  itemSlotList[i] = Instantiate(itemSlotPrefab, this.transform);
         newObject.gridCoordinate = new Vector2(x, y);
+        newObject.gridReference = this;
         newObject.id = i;
 
         if (x > 0)
@@ -66,5 +72,17 @@ public class ItemSlotGridDimensioner : MonoBehaviour
             return itemSlotList[id];
         else
             return null;
+    }
+
+    public void ResetIteminSlot(ItemInstance item)
+    {
+        foreach (ItemSlot slot in itemSlotList)
+        {
+            if (slot)
+            {
+                if (slot.itemInSlot == item)
+                    slot.itemInSlot = null;
+            }
+        }
     }
 }

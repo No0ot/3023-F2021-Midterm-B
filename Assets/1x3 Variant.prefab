@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2220279275125925362, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 96
+      value: 288
       objectReference: {fileID: 0}
     - target: {fileID: 2220279275125925362, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_LocalScale.x
@@ -33,11 +33,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2220279275125925362, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 213
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2220279275125925362, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 399
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2284994332423479218, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_RootOrder
@@ -57,11 +57,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2284994332423479218, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -644
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2284994332423479218, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -553
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2284994332423479218, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -97,7 +97,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2751491378659821153, guid: 73881833c406e5642ac97d666661f18b, type: 3}
       propertyPath: m_Name
-      value: ItemInstance1x3 Variant
+      value: 1x3 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5722574947651036913, guid: 73881833c406e5642ac97d666661f18b, type: 3}
+      propertyPath: size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5722574947651036913, guid: 73881833c406e5642ac97d666661f18b, type: 3}
+      propertyPath: size.y
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73881833c406e5642ac97d666661f18b, type: 3}

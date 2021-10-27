@@ -25,4 +25,9 @@ public class ItemTable : ScriptableObject
             }
         }
     }
+
+    public List<Item> GetTable()
+    {
+        return table;
+    }
 }

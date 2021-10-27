@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 public enum GridDirections
 {
     UP,
@@ -10,10 +11,10 @@ public enum GridDirections
     RIGHT
 }
 // Display item in the slot, update image, make clickable when there is an item, invisible when there is not
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IDropHandler
 {
-
-    public Item itemInSlot = null;
+    public ItemSlotGridDimensioner gridReference;
+    public ItemInstance itemInSlot = null;
     public Vector2 gridCoordinate;
     public ItemSlot[] neighbours;
     public int id;
@@ -46,8 +47,8 @@ public class ItemSlot : MonoBehaviour
     {
         if(itemInSlot != null)
         {
-            itemInSlot.Use();
-            if (itemInSlot.isConsumable)
+            itemInSlot.reference.Use();
+            if (itemInSlot.reference.isConsumable)
             {
                 itemCount--;
                 RefreshInfo();
@@ -57,7 +58,7 @@ public class ItemSlot : MonoBehaviour
 
     public void RefreshInfo()
     {
-        if(ItemCount < 1 && itemInSlot.isConsumable)
+        if(ItemCount < 1)
         {
             itemInSlot = null;
         }
@@ -66,13 +67,14 @@ public class ItemSlot : MonoBehaviour
         {
             //update image and text
             itemCountText.text = ItemCount.ToString();
-            icon.sprite = itemInSlot.icon;
-            icon.gameObject.SetActive(true);
+            icon.sprite = itemInSlot.reference.icon;
+            //icon.gameObject.SetActive(false);
+            itemCountText.gameObject.SetActive(false);
         } else
         {
             // No item
             itemCountText.text = "";
-            icon.gameObject.SetActive(false);
+            //icon.gameObject.SetActive(false);
         }
     }
 
@@ -90,5 +92,22 @@ public class ItemSlot : MonoBehaviour
     public GridDirections GetOppositeNeighbour(GridDirections direction)
     {
         return (int)direction < 2 ? (direction + 2) : (direction - 2);
+    }
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log("dropped");
+        if (eventData.pointerDrag != null)
+        {
+            ItemInstance temp = eventData.pointerDrag.GetComponent<ItemInstance>();
+            temp.gameObject.transform.SetParent(this.transform.parent.transform.parent);
+            temp.containerReference.RemoveItem(temp);
+            //temp.parentSlot.itemInSlot = null;
+            ItemSlot tempslot = temp.parentSlot;
+            temp.parentSlot = this;
+            temp.containerReference = temp.parentSlot.gridReference.containerReference;
+            temp.containerReference.PlaceItem(temp, temp.parentSlot, tempslot);
+            temp.PlaceItemInSlot();
+            //gridReference.
+        }
     }
 }

@@ -15,5 +15,5 @@ MonoBehaviour:
   name: Spear
   description: Good for grabbing fruit from high up in a tree
   icon: {fileID: 3086127856582126958, guid: 0657a0b2892d4cf49b09e2fec63a8531, type: 3}
-  isConsumable: 1
-  gridSize: {x: 1, y: 4}
+  isConsumable: 0
+  gridSize: {x: 1, y: 3}

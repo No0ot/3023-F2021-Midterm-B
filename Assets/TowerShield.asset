@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 338f75394b047f94c8b1d3e0ecc35512, type: 3}
-  m_Name: RoundShield
+  m_Name: TowerShield
   m_EditorClassIdentifier: 
-  name: Round Shield
-  description: Good for blocking things that need blocking.
-  icon: {fileID: -4339074186385428672, guid: 0657a0b2892d4cf49b09e2fec63a8531, type: 3}
-  isConsumable: 0
-  gridSize: {x: 2, y: 2}
+  name: item
+  description: this is an item
+  icon: {fileID: 0}
+  isConsumable: 1
+  gridSize: {x: 0, y: 0}
