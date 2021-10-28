@@ -28,7 +28,7 @@ public class Item : ScriptableObject
 
     public Sprite icon;
     public bool isConsumable = true;
-
+    public int maxCount;
     public Vector2 gridSize;
 
     //returns whether or not the Item was successfully used

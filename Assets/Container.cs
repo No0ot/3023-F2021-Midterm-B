@@ -20,7 +20,7 @@ public class Container : MonoBehaviour
 
         ItemSlot startSlot = attachedItemGrid.GetItemSlot().GetComponent<ItemSlot>();
 
-        while (!CheckIfFits(item.reference, startSlot))
+        while (!CheckIfFits(item, startSlot))
         {
             int tempInt = startSlot.id + 1;
             if (!attachedItemGrid.GetItemSlot(tempInt))
@@ -95,7 +95,7 @@ public class Container : MonoBehaviour
 
         ItemSlot startSlot = passedSlot;
 
-        while (!CheckIfFits(item.reference, startSlot))
+        while (!CheckIfFits(item, startSlot))
         {
             int tempInt = startSlot.id + 1;
             if (!attachedItemGrid.GetItemSlot(tempInt))
@@ -164,9 +164,9 @@ public class Container : MonoBehaviour
         }
     }
 
-    public bool CheckIfFits(Item item, ItemSlot startSlot)
+    public bool CheckIfFits(ItemInstance item, ItemSlot startSlot)
     {
-        float tempfloat = item.gridSize.x * item.gridSize.y;
+        float tempfloat = item.reference.gridSize.x * item.reference.gridSize.y;
         if (tempfloat > 1)
         {
             int x = 1;
@@ -174,14 +174,11 @@ public class Container : MonoBehaviour
 
             ItemSlot currentSlotX = startSlot;
             ItemSlot currentSlotY = startSlot;
-            if(startSlot.itemInSlot.reference == item && item.isConsumable)
-            {
 
-            }    
             if (!startSlot || startSlot.itemInSlot)
                 return false;
 
-            while (y < (int)item.gridSize.y)
+            while (y < (int)item.reference.gridSize.y)
             {
                 if (currentSlotY.GetNeighbour(GridDirections.DOWN) && currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot == null)
                 {
@@ -192,7 +189,7 @@ public class Container : MonoBehaviour
                 y++;
             }
 
-            while (x < (int)item.gridSize.x)
+            while (x < (int)item.reference.gridSize.x)
             {
                 y = 1;
 
@@ -204,7 +201,7 @@ public class Container : MonoBehaviour
                     return false;
 
                 currentSlotY = currentSlotX;
-                while (y < (int)item.gridSize.y)
+                while (y < (int)item.reference.gridSize.y)
                 {
                     if (currentSlotY.GetNeighbour(GridDirections.DOWN) && currentSlotY.GetNeighbour(GridDirections.DOWN).itemInSlot == null)
                     {

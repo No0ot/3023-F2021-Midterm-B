@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 338f75394b047f94c8b1d3e0ecc35512, type: 3}
   m_Name: TowerShield
   m_EditorClassIdentifier: 
-  name: item
-  description: this is an item
-  icon: {fileID: 0}
-  isConsumable: 1
-  gridSize: {x: 0, y: 0}
+  name: Tower Shield
+  description: For those instances when you need a wall in front of you.
+  icon: {fileID: 2821187120118760139, guid: 0657a0b2892d4cf49b09e2fec63a8531, type: 3}
+  isConsumable: 0
+  maxCount: 1
+  gridSize: {x: 2, y: 3}

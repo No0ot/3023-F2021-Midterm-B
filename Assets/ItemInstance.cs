@@ -1,3 +1,8 @@
+//
+// Credits to https://www.youtube.com/watch?v=BGr-7GZJNXg for the drag and drop functionality
+//
+//
+//
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -64,9 +69,18 @@ public class ItemInstance : MonoBehaviour, IBeginDragHandler, IEndDragHandler, I
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("dropped");
         if (eventData.pointerDrag != null)
-            eventData.pointerDrag.GetComponent<ItemInstance>().PlaceItemInSlot();
+        {
+            ///eventData.pointerDrag.GetComponent<ItemInstance>().PlaceItemInSlot();
+            if (eventData.pointerDrag.GetComponent<ItemInstance>().reference == reference && reference.isConsumable && count < reference.maxCount)
+            {
+                count += eventData.pointerDrag.GetComponent<ItemInstance>().count;
+                countText.SetText(count.ToString());
+                Destroy(eventData.pointerDrag.gameObject);
+                return;
+            }
+
+        }
     }
 
     public void PlaceItemInSlot()

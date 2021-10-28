@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &585157662
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 585157663}
+  - component: {fileID: 585157665}
+  - component: {fileID: 585157664}
+  m_Layer: 5
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &585157663
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585157662}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3749347835609666689}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 96, y: 96}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &585157665
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585157662}
+  m_CullTransparentMesh: 1
+--- !u!114 &585157664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585157662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4140859b143391944a329503efd5ad1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemInstancePrefab: {fileID: 6635861735329773976, guid: bc3453a29cf18dd4ca720d72dc86310e, type: 3}
+  itemList: []
+  itemTable: {fileID: 11400000, guid: 68fcaca77375b5e4292e6f67da4b0f39, type: 2}
 --- !u!1 &3272399871756723923
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,9 +174,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b91048d07029d4baa601862375f186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemSlotPrefab: {fileID: 0}
+  itemSlotPrefab: {fileID: -6310902972692443473, guid: 7d0c280c18fc7f44d993301e547d625c, type: 3}
   GridDimensions: {x: 5, y: 5}
   itemSlotList: []
+  containerReference: {fileID: 0}
 --- !u!114 &3272399871756723927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,13 +222,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3272399871756723920}
+  - {fileID: 585157663}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -350.00006, y: 0}
-  m_SizeDelta: {x: -699.9999, y: 0}
+  m_AnchoredPosition: {x: -350, y: 0}
+  m_SizeDelta: {x: -700, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3749347835609666692
 Canvas:

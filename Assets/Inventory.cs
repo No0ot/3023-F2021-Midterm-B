@@ -23,6 +23,14 @@ public class Inventory : MonoBehaviour
         {
             AddItem(Random.Range(0, ItemManager.Instance.itemTable.GetTable().Count), 1) ;
         }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            AddItem(0, 5);
+            AddItem(0, 5);
+            AddItem(0, 5);
+            AddItem(0, 5);
+            AddItem(0, ItemManager.Instance.itemTable.GetItem(0).maxCount);
+        }
     }
 
     public void OpenContainer()
@@ -65,10 +73,17 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void AddItem(int id, int count)
+    public void AddItem(int id, int count)
     {
         ItemInstance temp = ItemManager.Instance.CreateItemInstance(ItemManager.Instance.itemTable.GetItem(id), count, inventoryContainer);
         if(temp)
+            inventoryContainer.PlaceItem(temp);
+    }
+
+    public void AddItem(int id)
+    {
+        ItemInstance temp = ItemManager.Instance.CreateItemInstance(ItemManager.Instance.itemTable.GetItem(id), 1, inventoryContainer);
+        if (temp)
             inventoryContainer.PlaceItem(temp);
     }
 }

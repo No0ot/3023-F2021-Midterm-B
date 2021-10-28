@@ -24,14 +24,16 @@ public class ItemManager : MonoBehaviour
     {
         
         ItemInstance temp = Instantiate(itemInstancePrefab, this.gameObject.transform.parent.transform);
+        temp.Setup(item, count);
         ItemSlot startSlot = container.attachedItemGrid.GetItemSlot();
+
         if (!startSlot)
         {
             Destroy(temp.gameObject);
             return null;
         }
 
-        while (!container.CheckIfFits(item, startSlot))
+        while (!container.CheckIfFits(temp, startSlot))
         {
             int tempInt = startSlot.id + 1;
             if (!container.attachedItemGrid.GetItemSlot(tempInt))
@@ -44,7 +46,6 @@ public class ItemManager : MonoBehaviour
             startSlot = container.attachedItemGrid.GetItemSlot(tempInt);
 
         }
-        temp.Setup(item, count);
         itemList.Add(temp.gameObject);
         return temp;
     }

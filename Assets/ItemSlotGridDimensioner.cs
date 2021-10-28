@@ -1,3 +1,8 @@
+//
+// Credits to https://catlikecoding.com/unity/tutorials/hex-map/ I used this a while ago for a project with a hex grid but i still use the method of making a grid just
+// changed to a square grid.
+//
+//
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
